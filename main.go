@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	"github.com/legacyofmu/learngo/accounts"
+	"github.com/legacyofmu/learngo/mydict"
 )
 
 func lenAndUpper(name string) (int, string) {
@@ -79,6 +82,53 @@ func testStruct() {
 	fmt.Println(dhpark.name)
 }
 
+func testAccount() {
+	account := accounts.NewAccount("dhpark")
+	fmt.Println(account)
+	account.Deposit(10)
+	fmt.Println(account.Balance())
+	err := account.Withdraw(20)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(account.Balance())
+}
+
+func testDictionary() {
+	dictionary := mydict.Dictionary{"first": "First word"}
+	//dictionary["hello"] = "hello"
+	fmt.Println(dictionary)
+	definition, err := dictionary.Search("second")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(definition)
+	}
+	err1 := dictionary.Add("hello", "Greeting")
+	if err1 != nil {
+		fmt.Println(err1)
+	}
+	definition2, err2 := dictionary.Search("hello")
+	if err2 != nil {
+		fmt.Println(err2)
+	} else {
+		fmt.Println(definition2)
+	}
+	err3 := dictionary.Update("hello", "Bye")
+	if err3 != nil {
+		fmt.Println(err3)
+	}
+	word, _ := dictionary.Search("hello")
+	fmt.Println(word)
+	dictionary.Delete("hello")
+	word4, err4 := dictionary.Search("hello")
+	if err4 != nil {
+		fmt.Println(err4)
+	} else {
+		fmt.Println(word4)
+	}
+}
+
 func main() {
 	totalLength, upperName := lenAndUpper2("dhpark")
 	fmt.Println(totalLength, upperName)
@@ -90,4 +140,6 @@ func main() {
 	testArray()
 	testMap()
 	testStruct()
+	testAccount()
+	testDictionary()
 }
